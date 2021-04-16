@@ -219,6 +219,13 @@ export class AppComponent {
 You can read more about it [here](https://www.typescriptlang.org/docs/handbook/modules.html).  
 Notice that unlike the Angular-cli, here I’m using “template” instead of “templateUrl”, and serve it as a string.
 
+NOTE: the latest version of html-loader doesn't seems to be compatible with certain versions. One of the solution to solve this is to use the non-rewritten loader. As mention in (https://stackoverflow.com/questions/60801331/module-build-failed-from-node-modules-html-loader-dist-cjs-js)
+where we can simply add 
+```
+"html-loader":"1.0.0-alpha.0"
+```
+and run npm install to solve the issues.
+
 ## Using a different file for style
 I will do a pretty similar things for the style form. I’ll start by creating a scss file, 
 app.component.scss:
