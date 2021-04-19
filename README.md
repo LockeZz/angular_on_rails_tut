@@ -1,8 +1,8 @@
+PS: THE FOLLOWING TUTORIAL WERE NOT ENTIRELY WRITTEN BY ME.
+THE MAIN REFERENCE IS FROM THIS PAGE: (https://github.com/amitai10/rails-angular-webpacker) AND SINCE THE AUTHOR HAS NO LONGER ACTIVELY MAINTAINING IT, I HAVE RECOLLECTED SOME PART OF THE WORKABLE SOLUTION AT THIS POINT OF TIME INTO THIS EDITTED VERSION. THE FOLLOWING NOTES ARE MEANT FOR THE BENEFIT OF COMMUNITY.
+
 # Angular 2+ with Rails and Webpacker
 
-I love Rails, I think it’s the best web development platform, at least from a developer point of view (DX).  
-But it is not perfect. One of its major disadvantages is when you try to use it with one of  new modern JavaScript framework (React, Angular, Vue…).  
-There is no “Rails” way to do it. You need to start messing with configurations and settings, all the things that Rails trying to avoid.
 Writing a web application in Rails traditional way would be using ActiveViews, and add a little JQuery when you need JavaScript in the client. But when You want to write a single page application (SPA), it’s just not good enough.
 
 In this blog post I will explain how to create a SPA application with Rails and Angular 2+. I will do it with the new [Webpacker](https://github.com/Rails/webpacker) gem.
@@ -288,6 +288,21 @@ export class AppComponent {
 ```
 Again, I use “styles” instead of “styleUrl”.
 And we have a style!
+
+In case there is any loader errors, use the following code,
+```
+environment.loaders.insert('sass', {
+    test: /\.scss$/,
+    use: [
+        "to-string-loader", // creates style nodes from JS strings
+        "css-loader", // translates CSS into CommonJS
+        "sass-loader" // compiles Sass to CSS
+    ]
+});
+```
+As mentioned in (https://github.com/amitai10/rails-angular-webpacker/issues/2), apparently thers is a sass-loader being included by default in somewhere which has caused the loader error.
+If this solution is implemented, we no longer need to include the styles line in app.component.ts and hence it can be removed. All the styling can be achieved in the app/stylesheets folder of the rails application.
+
 ## Adding a server call
 Now I’ll add a server call so we will see tht there is no need for url specification, angular will call its server.  
 I’ll start by adding an endpoint to my Rails controller that returns a new name:
